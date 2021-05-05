@@ -2,17 +2,23 @@
 #include <string>
 #include <SDL.h>
 #include "GameBoard.h"
+#include "cleanup.h"
+#include "drawing_functions.h"
+#include "SDL_TTF.h"
 
 using namespace std;
 
 int main(int argc, char** argv)
 {
+	//Setup SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		cout << "Error: " << SDL_GetError() << endl;
 		system("pause");
 		return 1;
 	}
+
+	//Setup Window
 	SDL_Window* window = SDL_CreateWindow("TIC TAC TOE", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_SHOWN);
 	
@@ -23,6 +29,8 @@ int main(int argc, char** argv)
 		system("pause");
 		return 1;
 	}
+
+	//Setup renderer-lets us draw stuff to the screen
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == NULL)
@@ -33,10 +41,37 @@ int main(int argc, char** argv)
 		system("pause");
 		return 1;
 
-
-
-
 	}
+	//Initialize sdl_image
+	
+	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
+	{
+		SDL_Quit();
+		cout << "sdl image did not initialise" << endl;
+		return 1;
+	}
+
+
+
+
+
+	//initialize text to font
+	if (TTF_Init() != 0)
+	{
+		SDL_Quit();
+		cout << "sdl tff did not initialise" << endl;
+		return 1;
+	}
+
+	///this I PUT IN EXTRA!!
+	//LOAD a texture to draw
+	string resPath = getResourcePath();
+	SDL_Texture* texture = loadTexture(resPath + "yes.png", renderer);
+	renderTexture(texture, renderer, 0, 0);
+
+
+
+
 //Building Gameboard here(1)
 	GameBoard gameBoard(renderer);
 	
