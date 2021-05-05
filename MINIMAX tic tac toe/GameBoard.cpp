@@ -8,7 +8,7 @@ GameBoard::GameBoard(SDL_Renderer* renderer)
 {
     this->renderer = renderer;
 
-
+    yes = IMG_LoadTexture(renderer, "assets/yes.png");
     blank = IMG_LoadTexture(renderer, "assets/blank.png");
     cross = IMG_LoadTexture(renderer, "assets/cross.png");
     naught = IMG_LoadTexture(renderer, "assets/naught.png");

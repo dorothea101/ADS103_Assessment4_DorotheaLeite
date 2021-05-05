@@ -67,7 +67,18 @@ int main(int argc, char** argv)
 	//LOAD a texture to draw
 	string resPath = getResourcePath();
 	SDL_Texture* texture = loadTexture(resPath + "yes.png", renderer);
-	renderTexture(texture, renderer, 0, 0);
+	//putting this line in
+
+
+	//run game for 5000 ticks(5 secs)
+	while (SDL_GetTicks() < 5000)
+	{
+		//clear the screen
+		SDL_RenderClear(renderer);    //up to here
+		//draw what you want to the screen
+		renderTexture(texture, renderer, 0, 0);
+	}
+	
 
 
 
