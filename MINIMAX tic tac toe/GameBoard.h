@@ -25,9 +25,15 @@ public:
 	static char CROSS;
 	static char NAUGHT;
 
+
+	
+
 	//Need a reference to the renderer
 	SDL_Renderer* renderer;
-	SDL_Texture* blank, * cross, * naught;
+	SDL_Texture* blank, * cross, * naught, * yes;
+
+	//put this in 1
+	SDL_Texture* scoreTexture = NULL; //FOR DRAWING strings to the screen
 
 	char board[3][3];
 	int boardX = 500, boardY = 100;

@@ -66,18 +66,21 @@ int main(int argc, char** argv)
 	///this I PUT IN EXTRA!!
 	//LOAD a texture to draw
 	string resPath = getResourcePath();
-	SDL_Texture* texture = loadTexture(resPath + "yes.png", renderer);
+	SDL_Texture* texture = loadTexture( "assets/yes.png", renderer);
 	//putting this line in
 
 
 	//run game for 5000 ticks(5 secs)
-	while (SDL_GetTicks() < 5000)
+	while (SDL_GetTicks() < 10000)
 	{
 		//clear the screen
 		SDL_RenderClear(renderer);    //up to here
 		//draw what you want to the screen
 		renderTexture(texture, renderer, 0, 0);
+		//show image we've been rendering'
+		SDL_RenderPresent(renderer);
 	}
+	
 	
 
 
@@ -124,11 +127,59 @@ int main(int argc, char** argv)
 
 
 
-		SDL_SetRenderDrawColor(renderer, 170, 170, 170, 255);//rgba (0-255)
+		SDL_SetRenderDrawColor(renderer,205, 50, 167, 255);//rgba (0-255)
 		SDL_RenderClear(renderer);
 
 		//go here after you build gameboard above(2)
 		gameBoard.draw();
+		
+		//A--------------------------------------------------------
+		//added this**
+		
+		//renderCopy;
+		//SDL_Rect drawRect;
+		//drawRect.h;
+		//drawRect.w;
+		//SDL_RenderCopy(renderer, yes, NULL, &drawRect);
+		//up to here***/
+		//B---------------------------------------------------------
+		//get window surface
+		//screenSurface = SDL_GetWindowSurface(window);
+
+		//fill the surface
+		//SDL_FillRect( "assets/yes.png");
+
+		//**Trying again
+		
+		//C----------------------------------------------
+		//window we are rendering to
+		//SDL_Window* gWindow = NULL;
+
+		//THE Surface contained by the window
+		//SDL_Surface* gScreenSurface = NULL;
+
+		//The image will load and show on the screen
+		//SDL_Surface* gYes = NULL;
+		//D--------------------------------------------------
+
+		/*bool loadTexture()
+		{
+			//Loading success flag
+			bool success = true;
+
+			//Load splash/png? image
+			gYes = SDL_loadTexture("assets/yes.png");
+			if (gYes = NULL)
+			{
+				printf("Unable to load texture %s! SDL Error: %\n", "assets/yes.png", SDL_GetError());
+				success = false;
+			}
+			return success;
+
+		}*/
+		//----------------------------------------------------
+
+
 
 
 		//Swaps the buffers

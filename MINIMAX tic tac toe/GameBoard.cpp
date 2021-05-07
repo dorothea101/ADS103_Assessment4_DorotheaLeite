@@ -22,6 +22,8 @@ GameBoard::~GameBoard()
     SDL_DestroyTexture(cross);
     SDL_DestroyTexture(naught);
 }
+//added this2
+
 
 void GameBoard::clearBoard()   //2d array[3][3]
 {
