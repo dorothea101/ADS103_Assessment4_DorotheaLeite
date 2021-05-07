@@ -31,9 +31,13 @@ public:
 	//Need a reference to the renderer
 	SDL_Renderer* renderer;
 	SDL_Texture* blank, * cross, * naught, * yes;
+	SDL_Texture* overlayimage;
+	SDL_Texture* background;//did now
+	//SDL_Texture* scoreTexture = NULL; //For drawing strings to the screen
 
 	//put this in 1
-	SDL_Texture* scoreTexture = NULL; //FOR DRAWING strings to the screen
+	//SDL_Texture* scoreTexture = NULL; //FOR DRAWING strings to the screen
+	float overlayTimer = 2;
 
 	char board[3][3];
 	int boardX = 500, boardY = 100;

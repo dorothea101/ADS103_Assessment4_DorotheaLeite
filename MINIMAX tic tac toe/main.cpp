@@ -42,6 +42,13 @@ int main(int argc, char** argv)
 		return 1;
 
 	}
+	//This is the size to draw things at before we scale it 
+	//SDL_RenderSetLogicalSize(renderer, 2048, 1536);
+
+
+
+
+
 	//Initialize sdl_image
 	
 	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG)
@@ -66,12 +73,15 @@ int main(int argc, char** argv)
 	///this I PUT IN EXTRA!!
 	//LOAD a texture to draw
 	string resPath = getResourcePath();
-	SDL_Texture* texture = loadTexture( "assets/yes.png", renderer);
+	SDL_Texture* texture = loadTexture("assets/yes.png", renderer);
+	SDL_Texture* texture2 = loadTexture("assets/PlayerVersesPlayer.png", renderer);
+	SDL_Texture* texture3 = loadTexture("assets/AiVersesPlayer.png", renderer);
+	SDL_Texture* texture4 = loadTexture("assets/Reset.png", renderer);
 	//putting this line in
 
 
 	//run game for 5000 ticks(5 secs)
-	while (SDL_GetTicks() < 10000)
+	while (SDL_GetTicks() < 4000)
 	{
 		//clear the screen
 		SDL_RenderClear(renderer);    //up to here
@@ -91,6 +101,8 @@ int main(int argc, char** argv)
 	
 
 	bool quit = false;
+	bool aiMode = true;
+	int playerTurn = 1;
 	//GAME LOOP
 	while (!quit)
 	{
@@ -110,14 +122,36 @@ int main(int argc, char** argv)
 				if (e.key.keysym.scancode == SDL_SCANCODE_RETURN) {
 					gameBoard.clearBoard();
 				}
+				if (e.key.keysym.scancode == SDL_SCANCODE_P)    //player
+				{
+					aiMode = false;
+				}
+				if (e.key.keysym.scancode == SDL_SCANCODE_A)    //AI
+				{
+					aiMode = true;
+				}
 			}
 			//now here(3) this is the AI logic here
-			if (gameBoard.checkForClick(e, GameBoard::CROSS)) //IF I PRESS CLICK, THE RE SHOULD BE A CROSS ON BOARD
+			if (aiMode == true)
 			{
-				Move aiMove = gameBoard.findBestMove(gameBoard.opponent);   //you can switch this up and put in player here, instead of opponent
-				if(aiMove.row != -1 && aiMove.col != -1)        //will be = to -1 if we cant place a move
+				if (gameBoard.checkForClick(e, GameBoard::CROSS)) //IF I PRESS CLICK, THE RE SHOULD BE A CROSS ON BOARD
 				{
-					gameBoard.setTile(gameBoard.opponent, aiMove.row, aiMove.col);
+					Move aiMove = gameBoard.findBestMove(gameBoard.opponent);   //you can switch this up and put in player here, instead of opponent
+					if (aiMove.row != -1 && aiMove.col != -1)        //will be = to -1 if we cant place a move
+					{
+						gameBoard.setTile(gameBoard.opponent, aiMove.row, aiMove.col);
+					}
+				}
+			}
+			else
+			{
+				if (playerTurn == 1 && gameBoard.checkForClick(e, GameBoard::CROSS))
+				{
+					playerTurn = 2;
+				}
+				else if (playerTurn == 2 && gameBoard.checkForClick(e, GameBoard::NAUGHT))
+				{
+					playerTurn = 1;
 				}
 			}
 
@@ -126,12 +160,17 @@ int main(int argc, char** argv)
 		
 
 
-
+		
 		SDL_SetRenderDrawColor(renderer,205, 50, 167, 255);//rgba (0-255)
 		SDL_RenderClear(renderer);
 
 		//go here after you build gameboard above(2)
 		gameBoard.draw();
+		//SDL_RenderClear(renderer);
+		renderTexture(texture2, renderer,200, 300);
+		renderTexture(texture3, renderer,200, 400);
+		renderTexture(texture4, renderer,200, 500);
+		SDL_RenderPresent(renderer);
 		
 		//A--------------------------------------------------------
 		//added this**
